@@ -1,5 +1,4 @@
 Unbounded
 =========
 
-F# to T-SQL.  Domain invariant preservation and remote command execution
-
+F# to T-SQL.  Remote command execution and domain invariant enforcement.
