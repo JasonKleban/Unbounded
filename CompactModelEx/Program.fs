@@ -68,6 +68,12 @@ module businessRules =
         for parent in d.People do
         join child in d.People on (Some parent.ID = child.ParentID)
         exists (child.Birthdate <= parent.Birthdate) }
+
+    let childrenWithParents (d : Domain) = query {
+      for child in d.People do
+      leftOuterJoin parent in d.People on (child.ParentID = Some parent.ID) into parents
+      where (child.ParentID.IsSome)
+      }
      
 // various operations ...
      

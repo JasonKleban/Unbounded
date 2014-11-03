@@ -47,8 +47,11 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SQLModel.fs" />
+    <None Include="SQLModel.fsx" />
     <Compile Include="Program.fs" />
     <None Include="App.config" />
+    <None Include="FsToSQL-Prototype1.fsx" />
   </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
