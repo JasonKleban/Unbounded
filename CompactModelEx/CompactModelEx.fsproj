@@ -47,11 +47,13 @@
     <Reference Include="System.Numerics" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Trees.fs" />
     <Compile Include="SQLModel.fs" />
     <None Include="SQLModel.fsx" />
     <Compile Include="Program.fs" />
     <None Include="App.config" />
     <None Include="FsToSQL-Prototype1.fsx" />
+    <None Include="Trees.linq" />
   </ItemGroup>
   <PropertyGroup>
     <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
