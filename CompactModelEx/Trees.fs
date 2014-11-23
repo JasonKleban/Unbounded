@@ -19,6 +19,16 @@ type ProjectedTree<'a,'b>(tree:ITree<'a>, f:'a -> 'b) =
     member this.Value = this.Value
     member this.Children = this.Children
 
+type MaxTree<'a>(source:ITree<'a>,max:int) =
+  member this.Value = source.Value
+  member this.Children = 
+    if max <= 1 then Seq.empty
+    else seq { for c in source.Children do
+                yield MaxTree(c, (max - 1)) :> ITree<'a> }
+  interface ITree<'a> with
+    member this.Value = this.Value
+    member this.Children = this.Children
+
 module Tree =
   let root (value:'a) = Tree(value, fun v -> Seq.empty<ITree<'a>>) :> ITree<'a>
   let expand (f:'a -> seq<'a>) (tree:ITree<'a>) = 
@@ -32,20 +42,7 @@ module Tree =
       node.Children |> Seq.filter (fun node -> f node.Value)
     Tree(tree.Value, getSub) :> ITree<'a>
   let rec maxDepth (max:int) (tree:ITree<'a>) : ITree<'a> =
-    if max < 1 then root tree.Value
-    else 
-      let getSub (node:ITree<'a>) =
-        node.Children |> Seq.map (maxDepth (max - 1))
-      Tree(tree, getSub) :> ITree<'a>
-
-//    { new ITree<'a> with
-//        member this.Value = tree.Value
-//        member this.Children = 
-//          if max <= 1 then Seq.empty
-//          else seq { for c in tree.Children do
-//                     yield maxDepth (max - 1) tree }
-//    }
-    
+    MaxTree(tree, max) :> ITree<'a>    
 
 open System
 open System.Runtime.CompilerServices

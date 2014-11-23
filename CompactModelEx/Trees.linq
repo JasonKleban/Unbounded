@@ -7,8 +7,10 @@
 var t = Tree.root(1) //.Dump("root")
 		.Expand(x => Enumerable.Range(x + 1, 3)) //.Dump("Expanding")
 		.Select(x => x * x) //.Dump("Select")
-		.MapDepth(1).Dump("Max Depth");
+		.MapDepth(3)
+		.Dump("Max Depth")
+;
 
-//t2.Dump();
+//t.Dump();
 
 //TreeExtensions.Expand( Tree.root(1), x => Enumerable.Range(x, 2)).Dump();
