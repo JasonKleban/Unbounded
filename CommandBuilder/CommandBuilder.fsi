@@ -8,7 +8,6 @@ open System.Linq
 open System.Collections
 open System.Collections.Generic
 
-
 // Modeling a table or updatable view of some type
 // akin to `seq` in QueryBuilder, but I don't want the usage of this
 // type to imply that it can be operated on at all within the application
@@ -24,30 +23,20 @@ type Table<'T> =
 type Target<'T, 'Q> =
     new : Table<'T> option -> Target<'T,'Q>
     member Target : Table<'T> option
-    //member Collect : mapping:('T -> Table<'U>) -> source:Table<'T> -> Table<'U>
 
 // Staring with the basics, this was called `QueryBuilder`
 [<Class>]
 type CommandBuilder =
-    new : unit -> CommandBuilder
-
+    new : unit -> CommandBuilder    
     member Yield : value:'T -> Target<'T,'Q>
-
     member Zero : unit -> Target<'T,'Q> 
-
     member For : target:Target<'T,'Q> * body:('T -> Target<'Result,'Q2>) -> Target<'Result,'Q>
-
     [<CustomOperation("select",AllowIntoPattern=true)>] 
     member Select : target:Target<'T,'Q> * [<ProjectionParameter>] projection:('T -> 'Result) -> Target<'Result,'Q>
-
     [<CustomOperation("where",MaintainsVariableSpace=true,AllowIntoPattern=true)>] 
-    member Where : source:Target<'T,'Q> * [<ProjectionParameter>] predicate:('T -> bool) -> Target<'T,'Q>
-
-
-    
+    member Where : source:Target<'T,'Q> * [<ProjectionParameter>] predicate:('T -> bool) -> Target<'T,'Q>    
     [<CustomOperation("insertInto" )>] 
-    member Insert : source:Target<'T, 'Q> * [<ProjectionParameter>] target:(unit -> Table<'T>) -> unit
-    
+    member Insert : source:Target<'T, 'Q> * [<ProjectionParameter>] target:(unit -> Table<'T>) -> unit    
     [<CustomOperation("delete")>] 
     member Delete : target:Target<'T,'Q> -> unit
 
